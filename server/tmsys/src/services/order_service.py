@@ -249,8 +249,3 @@ def get_order(id):
     order_data['order_lng'] = order.order_lng
     return jsonify({'order' : order_data, 'success' : True})
 
-
-
-
-
-

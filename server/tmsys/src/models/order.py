@@ -47,3 +47,5 @@ class Order(db.Model):
         
     def __repr__(self):
         return '%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s/%s' % (self.order_id, self.client_id,self.order_status,self.date_received, self.order_address, self.order_reference, self.order_date, self.order_code, self.order_ht, self.order_tva, self.order_ttc, self.order_lng , self.order_lat, self.order_time_window)
+
+

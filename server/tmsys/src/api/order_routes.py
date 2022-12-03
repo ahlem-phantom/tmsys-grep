@@ -1,7 +1,7 @@
 from flask import Blueprint ,jsonify
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import request
-from ..services.order_service import create_order, get_orders, getorders, gettodayorders
+from ..services.order_service import create_order, get_orders, getorders, gettodayorders, get_order
 from src.app import db
 from src.models import Order
 import cv2
@@ -44,7 +44,7 @@ def addOrder():
 @order_api.route('/save-order', methods=['GET'])
 def saveOrder():
     pytesseract.pytesseract.tesseract_cmd = 'C:/Program Files/Tesseract-OCR/tesseract.exe'
-    image_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'uploads', 'Facture_2.jpg'))
+    image_dir = os.path.abspath(os.path.join(os.path.dirname( __file__ ), '..', 'uploads', 'Facture.jpg'))
     image = cv2.imread(image_dir, cv2.IMREAD_COLOR)
     #Data After OCR Extraction
     resultat = pytesseract.image_to_string(image)
@@ -56,18 +56,18 @@ def saveOrder():
     order_ht = getTextBetween(resultat, 'Total HT ', 'TVA (20%) ').strip()
     order_tva = getTextBetween(resultat, 'TVA (20%) ', 'Total TTC (en euros) ').strip()
     order_ttc = getTextBetween(resultat, 'Total TTC (en euros) ', 'En votre aimable réglement,').strip()
-    data = Order(order_address, order_reference, order_date, order_code, order_ht, order_tva, order_ttc)
     url = 'https://nominatim.openstreetmap.org/search/' + urllib.parse.quote("ariana ghazela") +'?format=json'
     response = requests.get(url).json()
-    print(response)
+    print(response[0]['lon'],response[0]['lat'])
+    data = Order(1,order_address, order_reference, order_date, order_code, order_ht, order_tva, order_ttc, response[0]['lon'], response[0]['lat'])
     db.session.add(data)
     db.session.commit()
     return jsonify({ 
             'status': True 
         })
 
-@order_api.route('/get-order', methods=['GET'])
-def getOrder():
+@order_api.route('/get-order-mail', methods=['GET'])
+def getOrderMail():
     return get_orders()
 
 @order_api.route('/all-orders', methods=['GET'])
@@ -77,3 +77,7 @@ def getOrders():
 @order_api.route('/all-torders', methods=['GET'])
 def getTodayOrders():
     return gettodayorders()
+
+@order_api.route('/get-order/<int:id>', methods=['GET'])
+def getOrder(id):
+    return get_order(id)

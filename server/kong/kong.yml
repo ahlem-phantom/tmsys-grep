@@ -1,0 +1,43 @@
+_format_version: "2.1"
+
+services:
+
+  - name: kong_tms
+    url: http://tms:5000
+    routes:
+      - name: tms
+        paths:
+          - /tms
+
+  - name: kong_ims
+    url: http://ims:5001
+    routes:
+      - name: ims
+        paths:
+          - /ims
+        methods:
+          - GET
+          - POST
+
+
+plugins:
+- name: cors
+  config: 
+    origins:
+    - "*"
+    methods:
+    - GET
+    - POST
+    headers:
+    - Accept
+    - Accept-Version
+    - Authorization
+    - Content-Length
+    - Content-MD5
+    - Content-Type
+    - Date
+    - X-Auth-Token
+    exposed_headers:
+    - X-Auth-Token
+    credentials: true
+    max_age: 3600

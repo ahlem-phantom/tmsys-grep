@@ -19,6 +19,6 @@ def deleteClient(id):
     return delete_client(id)
 
 
-@client_api.route('/update-user/<int:id>', methods=['DELETE'])
+@client_api.route('/update-user/<int:id>', methods=['PUT'])
 def updateClient(id,data):
     return update_client(id,data)

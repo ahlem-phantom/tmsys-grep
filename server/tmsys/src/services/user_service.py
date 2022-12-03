@@ -9,21 +9,44 @@ from datetime import datetime, timedelta, date
 from  werkzeug.security import generate_password_hash, check_password_hash
 from src.shared.authentication import token_required
 import json
-
+    
 #User Authentication
 def login(body):
-    if not body : 
-       return make_response('login required', 401, {'Authentication': 'login required"'}) 
+
+    if not body['username'] or not body['password'] or not body:
+     return jsonify({ 
+            'status': False,
+            'errors':  [
+               {
+                  "errnumber": "c7ab4814cdf7c88e991490af28bd2c9c",
+                  "errordesc": "Username and password required !",
+                  "errofield": "username",
+                  "errolevel": "UNAUTHORISED",
+                  "edatetime": date.today()
+               }
+              ],
+            'data' : []
+           
+        })
     username = body['username']
     password = body['password']
     user = User.query.filter_by(username=username).first() 
     if not user:
         # returns 401 if user does not exist
-        return make_response(
-            'Username not found',
-            401,
-            {'WWW-Authenticate' : 'Basic realm ="User does not exist !!"'}
-        )
+        return jsonify({ 
+            'status': False,
+            'errors':  [
+               {
+                  "errnumber": "c7ab4814cdf7c88e991490af28bd2c9c",
+                  "errordesc": "User does not exist !",
+                  "errofield": "username",
+                  "errolevel": "UNAUTHORISED",
+                  "edatetime": date.today()
+               }
+              ],
+            'data' : []
+           
+        })
     #password check
     if check_password_hash(user.password, password):
         token = jwt.encode({
@@ -58,13 +81,15 @@ def login(body):
                   "errnumber": "c7ab4814cdf7c88e991490af28bd2c9c",
                   "errordesc": "password mismatch!",
                   "errofield": "password",
-                  "ercontext": "executeService msp.sys.obj.ApiModel",
                   "errolevel": "ERROR",
                   "edatetime": date.today()
                }
               ],
              'data': []          
         })
+
+
+
 
 #Create user
 def new_user(body):
