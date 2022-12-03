@@ -1,0 +1,47 @@
+#map-d {
+    height: 500px;
+    width: 100%;
+    float: left;
+    z-index: 1;
+    position: relative;
+}
+
+.overlay {
+    height: 115px;
+    width: 1135px;
+    margin-left: 10px;
+    margin-right: 0px;
+    margin-top: 400px;
+    position: absolute;
+    float: right;
+    z-index: 2;
+    background-color: 	white;
+    pointer-events: auto;
+    border-radius:22px;
+    opacity: 0.8;
+
+    
+    
+  }
+
+  .vertical {
+    border-left: 6px solid black;
+    height: 115px;
+}
+
+path.leaflet-interactive.animate {
+  stroke-dasharray: 1920;
+  stroke-dashoffset: 1920;
+  animation: dash 20s linear 3s forwards;
+}
+
+@keyframes dash {
+  to {
+      stroke-dashoffset: 0;
+  }
+}
+
+
+.leaflet-control-container .leaflet-routing-container-hide {
+  margin-right: -340px;
+}

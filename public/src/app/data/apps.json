@@ -1,0 +1,17 @@
+{
+
+    "apps": [
+      {
+        "app_id": 1,
+        "app_name": "TMS",
+        "isDownloaded": true,
+        "isUpdates": true
+      },
+      {
+        "app_id": 2,
+        "app_name": "IMS",
+        "isDownloaded": false,
+        "isUpdates": false
+      }
+    ]
+  }

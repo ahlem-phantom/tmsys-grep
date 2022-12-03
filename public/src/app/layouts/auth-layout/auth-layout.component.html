@@ -1,0 +1,68 @@
+<div class="page-wrapper">
+    <div class="page-inner">
+        <div class="page-content-wrapper bg-transparent m-0 ">
+           
+            <div class="shadow-lg px-4 bg-brand-gradient mc-autor">
+                <div class="d-flex align-items-center container p-0 ml-">
+                    <div class="width-mobile-auto m-0 align-items-center justify-content-between p-0 bg-transparent bg-img-none shadow-0 height-9">      
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex-1" style="background: url(img/svg/pattern-1.svg) no-repeat center bottom fixed; background-size: cover;">
+            
+                <div class="container my-lg-5 py-4 py-lg-5 px-4 px-sm-0">
+                    
+                    <div class="row">
+                        
+                        <div class="col-xl-6 ml-auto mr-auto">  
+                            <a href="javascript:void(0)" style="display: flex; justify-content: center; align-items: center;">
+                                <img src="assets/img/poulina.png" width="270px" style="display: flex; justify-content: center; align-items: ce; " alt="SmartAdmin WebApp" aria-roledescription="logo">
+                            </a>
+                            <div class="card p-5 rounded-plus bg-faded">
+                                
+                           <!--   <form id="js-login" novalidate="" [formGroup]="myFormLogin" (ngSubmit)="login(myFormLogin)" >-->  
+                                    <form id="js-login" [formGroup]="form" (ngSubmit)="onSubmit()">
+                                    <div class="form-group" >
+                                        <label class="form-label" for="username">Username</label>
+                                        <input type="email" id="username" class="form-control form-control-lg" formControlName="username">
+                                        <div class="alert alert-danger" *ngIf="form.controls['username'].invalid && form.controls['username'].touched">
+                                            Username is required
+                                          </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input type="password" id="password" class="form-control form-control-lg" formControlName="password">
+                                        <div class="alert alert-danger" *ngIf="form.controls['password'].invalid && form.controls['password'].touched">
+                                           Password is required
+                                          </div>
+                                        <div class="help-block">Your password</div>
+                                    </div>
+                                    <div class="form-group text-left">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="rememberme">
+                                            <label class="custom-control-label" for="rememberme"> Remember me for the next 30 days</label>
+                                        </div>
+                                    </div>
+                                    <div class="row no-gutters">
+                                        <div class="col-md-4 ml-auto text-right">
+                                            <button type="submit" class="btn btn-info btn-block btn-lg"  [disabled]="form.invalid">
+                                                <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                                                Sign in
+                                            </button>
+                                            <div *ngIf="error" class="alert alert-danger mt-3 mb-0">{{error}}</div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="position-absolute pos-bottom pos-left pos-right p-3 text-center text-white">
+                        2019 © SmartAdmin by&nbsp;<a href='https://www.gotbootstrap.com' class='text-white opacity-40 fw-500' title='gotbootstrap.com' target='_blank'>gotbootstrap.com</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

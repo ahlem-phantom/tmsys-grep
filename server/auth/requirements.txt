@@ -1,0 +1,4 @@
+Flask==1.1.1
+requests==2.25.1
+PyJWT==2.0.0
+get-docker-secret==1.0.1

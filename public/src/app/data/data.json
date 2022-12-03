@@ -1,0 +1,29 @@
+{
+    "shippements": [
+        {
+          "id": "1",
+          "title": "SHIPP5274",
+          "status" : "On route"
+        },
+        {
+          "id": "2",
+          "title": "SHIPP5275",
+          "status" : "Loading"
+        },
+        {
+            "id": "3",
+            "title": "SHIPP5276",
+            "status" : "Unloading"
+        },
+        {
+            "id": "4",
+            "title": "SHIPP5277",
+            "status" : "Late"
+        },
+        {
+            "id": "5",
+            "title": "SHIPP5278",
+            "status" : "Stopped"
+        }
+      ]
+}
