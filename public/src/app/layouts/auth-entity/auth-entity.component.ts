@@ -23,7 +23,7 @@ export class AuthEntityComponent implements OnInit {
 
   login(myForm:FormGroup){
     this.submittedLogin = true;
-    localStorage.setItem("currentUser","1");
+    //localStorage.setItem("currentUser","1");
     this.router.navigate(["/app/inbox"]);
   }
 

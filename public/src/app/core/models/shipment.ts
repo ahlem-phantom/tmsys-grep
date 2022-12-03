@@ -1,27 +1,24 @@
-enum state {
-    "IN TRANSIT",
-    "DELIVERED",
-    "READY TO SHIP",
-    "DRAFT",
-    "idle timeout",
-    "no connection"
+import { Order } from 'src/app/core/models/order';
+import { Driver } from 'src/app/core/models/driver';
+import { Truck } from 'src/app/core/models/truck';
+
+export enum shipmentState {
+  READY_TO_SHIP = "\"READY_TO_SHIP\"",
+  ON_ROUTE = "\"ON_ROUTE\"",
+  LOADING = "\"LOADING\"",
+  UNLOADING = "\"UNLOADING\"",
+  LATE = "\"LATE\"",
+  STOPPED = "\"STOPPED\"",
+  NO_CONNECTION = "\"NO_CONNECTION\""
 }
+
 export class Shipment {
-shipement_id : number;
-order_id : number; 
-origin_city : string;
-destination_city :string;
-estimated_pickup : Date ;
-estimated_delivery : Date ;
-last_updated : Date ;
-stock : number;
-description : string;
-volume : number;
-width : number; 
-height : number; 
-length : number ;
-net_weight : number ;
-brut_weight : number;
-distance : number ; 
-shippement_status : state ;
-} 
+  shipment_id: number;
+  order_id: number;
+  created_at: Date;
+  shipment_status: shipmentState;
+  shipment_code: string;
+  order: Order;
+  driver: Driver;
+  truck: Truck;
+}

@@ -1,0 +1,77 @@
+<div class="row">
+    <div class="col-lg-5">
+        
+        <div id="panel-2" class="panel" data-panel-fullscreen="false">
+            <div class="panel-hdr">
+                <h2>
+                    Shippements
+                </h2>
+            </div>
+            <div class="border-faded p-3 mb-g d-flex">
+                <input type="text" name="filter-contacts" class="form-control shadow-inset-2 form-control-lg" placeholder="Search Tracking" list="shippements" (keyup)="getUserIdsFirstWay($event)" id="userIdFirstWay">
+                <datalist id="shippements">
+                    <option *ngFor="let item of shipments" [value]="item.shipment_id">{{item.order.order_lng}} - {{item.order.order_lat}} </option>
+                 </datalist>
+            </div>
+            <div class="col-xl-12" *ngFor="let s of shipments | paginate: { itemsPerPage: listSize, currentPage: page, totalItems: count}; let i = index" >
+                <div id="{{'object-' + i}}" class="card border shadow-0 shadow-sm-hover mb-1" >
+                    <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
+                        <div class="d-flex flex-row align-items-center">
+                            <div class="info-card-text flex-1">
+                                <a href="javascript:void(0);" (click)="hide=true" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" [attr.aria-expanded]="false">
+                                    <span style="color: black; font-size : 22px;">SHIPP{{s.shipment_id}}</span>
+                                </a>
+                                <span [style.color]='getColor(s.shipment_status)' [style.font-size]="22+'px'"><b>{{s.shipment_status | transform}} </b></span>
+                            </div>
+                            <button class="js-expand-btn btn btn-sm btn-default waves-effect waves-themed" data-toggle="collapse" [attr.data-target]="'#object-'+i+'> .card-body + .card-body'" [attr.aria-expanded]="true">
+                                <span class="collapsed-hidden">+</span>
+                                <span class="collapsed-reveal">-</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card-body p-0 collapse" style="background-color: #f9f9f9;">
+                        <div class="p-3">
+                            <a href="tel:+13174562564" class="mt-1 d-block fs-sm fw-400 text-dark app-list-map text-white ">
+                                <div class="icon-stack">
+                                    <i class="base base-7 icon-stack-3x opacity-100 color-info-300 "></i>
+                                    <i class="base base-7 icon-stack-2x opacity-100 color-info-300 "></i>
+                                    <i class="fal fa-truck icon-stack-1x text-white"></i>
+                                </div>           
+                               &nbsp;&nbsp;&nbsp; <span style="font-size:20px ; color : black;">{{s.driver.driver_firstname}} {{s.driver.driver_lastname}}</span>             
+                            </a>
+                            <a href="tel:+13174562564" class="mt-1 d-block fs-sm fw-400 text-dark app-list-map text-white border-0 m-0">
+                                <div class="icon-stack">
+                                    <i class="base base-7 icon-stack-3x opacity-100 color-info-300 "></i>
+                                    <i class="base base-7 icon-stack-2x opacity-100 color-info-300 "></i>
+                                    <i class="fal fa-map-marker-alt icon-stack-1x text-white"></i>
+                                </div>     
+                                &nbsp;&nbsp;&nbsp; <span style="font-size:20px ; color : black;">Borj cedriya - Ariana</span>                                
+                            </a>
+                            <a href="tel:+13174562564" class="mt-1 d-block fs-sm fw-400 text-dark app-list-map text-white border-0 m-0">
+                                <div class="icon-stack">
+                                    <i class="base base-7 icon-stack-3x opacity-100 color-info-300 "></i>
+                                    <i class="base base-7 icon-stack-2x opacity-100 color-info-300 "></i>
+                                    <i class="fal fa-calendar-alt icon-stack-1x text-white"></i>
+                                </div>  
+                                &nbsp;&nbsp;&nbsp; <span style="font-size:20px ; color : black;">{{s.order.order_date | date}}</span>             
+                          
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <pagination-controls previousLabel="Prev" nextLabel="Next" (pageChange)="onListDataChange($event)">
+            </pagination-controls>
+            
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <app-map-details *ngIf="hide === true"></app-map-details>
+        <div [hidden]="hide" id="map-shipment"></div>
+        </div>
+    </div>
+    
+
+    <router-outlet></router-outlet>
+

@@ -19,7 +19,7 @@ export class TruckComponent implements OnInit {
   truck: Truck;
   page: number = 1;
   count: number = 0;
-  tableSize: number = 7;
+  tableSize: number = 9;
   tableSizes: any = [3, 6, 9, 12];
 
   constructor(private router : Router ,private truckService: TruckService, private fb: FormBuilder,private elementRef: ElementRef) { }

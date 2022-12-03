@@ -9,6 +9,7 @@ import { TrackDetailsComponent } from './tracking/track-details/track-details.co
 import { TrackingComponent } from './tracking/tracking.component';
 import { TruckComponent } from './truck/truck.component';
 import { TruckDetailsComponent } from './truck/truck-details/truck-details.component';
+import { ShipmentComponent } from './shipment/shipment.component';
 export const TmsLayoutRoutes: Routes = [  
   {
     path: 'dashboard',
@@ -45,6 +46,10 @@ export const TmsLayoutRoutes: Routes = [
     {
      path: 'client',
      component: ClientComponent
-    }
+    },
+    {
+      path: 'shipment',
+      component: ShipmentComponent
+     }
 ];
 

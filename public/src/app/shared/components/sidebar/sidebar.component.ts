@@ -22,6 +22,7 @@ export const ROUTESTMS: RouteInfo[] = [
   { path: '/tms/driver', title: 'Driver Management',  icon: 'fas fa-id-card', class: '' },
   { path: '/tms/truck', title: 'Truck Management',  icon: 'fas fa-truck', class: '' },
   { path: '/tms/client', title: 'Client Management',  icon: 'fas fa-user-alt', class: '' },
+  { path: '/tms/shipment', title: 'Shipment Tracking',  icon: 'fas fa-map-marker-alt', class: '' },
 
 ];
 

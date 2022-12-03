@@ -53,26 +53,31 @@
 <div id="addClient" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center w-100">
+				<h4 class="m-0 text-center color-white">
+					Add Client
+					<small class="mb-0 opacity-80">Client Management Settings</small>
+				</h4>
+				<button type="button" class="close text-white position-absolute pos-top pos-right p-2 m-1 mr-2" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"><i class="fal fa-times"></i></span>
+				</button>
+			</div> 
 			<form [formGroup]="addForm" (ngSubmit)="addSubmit()">
-				<div class="modal-header">						
-					<h4 class="modal-title">Add Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
 				<div class="modal-body">	 		
 					<div class="form-group">
-						<label>Name</label>
+						<label>Company Name</label>
 						<input type="text" class="form-control" formControlName="company_address" id="company_address" required>
 					</div>
 					<div class="form-group">
-						<label>Email</label>
+						<label>Client Email</label>
 						<input type="email" class="form-control" formControlName="company_name" id="company_name" required>
 					</div>
 					<div class="form-group">
-						<label>Address</label>
+						<label>Client Address</label>
 						<textarea class="form-control" formControlName="company_phone" id="company_phone"required></textarea>
 					</div>
 					<div class="form-group">
-						<label>Phone</label>
+						<label>Client Phone</label>
 						<input type="text" class="form-control" formControlName="company_email" id="company_email" required>
 					</div>					
 				</div>
@@ -87,26 +92,31 @@
 <div id="editClient" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center w-100">
+				<h4 class="m-0 text-center color-white">
+					Edit Client
+					<small class="mb-0 opacity-80">Client Management Settings</small>
+				</h4>
+				<button type="button" class="close text-white position-absolute pos-top pos-right p-2 m-1 mr-2" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"><i class="fal fa-times"></i></span>
+				</button>
+			</div> 
 			<form [formGroup]="editForm">
-				<div class="modal-header">						
-					<h4 class="modal-title">Add Client</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
 				<div class="modal-body">	 		
 					<div class="form-group">
-						<label>Name</label>
+						<label>Company Name</label>
 						<input type="text" class="form-control" formControlName="company_address" id="company_address" required>
 					</div>
 					<div class="form-group">
-						<label>Email</label>
+						<label>CLient Email</label>
 						<input type="email" class="form-control" formControlName="company_name" id="company_name" required>
 					</div>
 					<div class="form-group">
-						<label>Address</label>
+						<label>Client Address</label>
 						<textarea class="form-control" formControlName="company_phone" id="company_phone"required></textarea>
 					</div>
 					<div class="form-group">
-						<label>Phone</label>
+						<label>Client Phone</label>
 						<input type="text" class="form-control" formControlName="company_email" id="company_email" required>
 					</div>					
 				</div>
@@ -122,11 +132,16 @@
 <div id="deleteClient" class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">
+			<div class="dropdown-header bg-trans-gradient d-flex justify-content-center align-items-center w-100">
+				<h4 class="m-0 text-center color-white">
+					Delete Client
+					<small class="mb-0 opacity-80">Client Management Settings</small>
+				</h4>
+				<button type="button" class="close text-white position-absolute pos-top pos-right p-2 m-1 mr-2" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true"><i class="fal fa-times"></i></span>
+				</button>
+			</div> 
 			<form>
-				<div class="modal-header">						
-					<h4 class="modal-title">Delete Employee</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
 				<div class="modal-body">					
 					<p>Are you sure you want to delete these Records?</p>
 					<p class="text-warning"><small>This action cannot be undone.</small></p>

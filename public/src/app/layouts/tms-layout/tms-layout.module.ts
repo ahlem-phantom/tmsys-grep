@@ -19,7 +19,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { StringPipe } from '../../core/helpers/pipes/statepipe'
+import { StringPipe } from '../../core/helpers/pipes/statepipe';
+import { ShipmentComponent } from './shipment/shipment.component'
 
 @NgModule({
   imports: [
@@ -45,7 +46,8 @@ import { StringPipe } from '../../core/helpers/pipes/statepipe'
     TruckDetailsComponent,
     TrackDetailsComponent,
     ShippementsComponent,
-    StringPipe
+    StringPipe,
+    ShipmentComponent
   ],
   exports : [
     MatPaginatorModule,

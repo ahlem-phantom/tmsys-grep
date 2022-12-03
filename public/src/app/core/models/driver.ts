@@ -7,8 +7,8 @@ export class Driver {
     driver_id : number;
     images : string  ;
     phone : number;
-    firstname : string ;
-    lastname : string ;
+    driver_firstname : string ;
+    driver_lastname : string ;
     email : string ;
     address : string ;
     license_no : string ; // num mtaa el permis 

@@ -3,8 +3,6 @@ import  'leaflet';
 import { HttpClient } from '@angular/common/http';
 import 'leaflet-routing-machine';
 import { icon, Icon } from 'leaflet';
-import { ShippementService } from 'src/app/core/services/shippement/shippement.service';
-import { find } from 'rxjs';
 declare let L;
 
 @Component({
@@ -17,22 +15,41 @@ export class TrackDetailsComponent implements OnInit,OnDestroy {
   progress : any ;
   orders : any;
   shippments: any = [];
+  data = [
 
+    {
+        "title": 'Chennai',
+        "latitude": '13.0827',
+        "lng": '80.2707',
+        "description": '',
+        "flag":'1'
+    }
+  ,
+  {
+    "title": 'Ramapuram',
+    "latitude": '13.0317',
+    "lng": '80.1817',
+    "description": ''
+
+  }
+  ,
+    {
+        "title": 'Kanchipuram',
+        "latitude": '12.8342',
+        "lng": '79.7036',
+        "description": '',
+        "flag":'1'
+    },
+
+  ];
   private truckIcon: Icon = icon({
     iconUrl: 'assets/img/svg/truck.svg',
     iconSize: [50, 51], // => random values you have to choose right ones for your case
   });
 
-  constructor(private httpClient: HttpClient, private shippementService :  ShippementService) { }
+  constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.shippementService.get().subscribe(data => {
-      item => item.id === 2
-  });
-    this.shippementService.get().subscribe(
-      find((data :any) => 
-        data.id == 5
-      ));
     this.map = L.map('map-d').setView([34.079, 9.701], 9);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     }).addTo(this.map);
@@ -74,7 +91,21 @@ export class TrackDetailsComponent implements OnInit,OnDestroy {
         }
       }).addTo(this.map);
       L.marker([ "57.72","11.945" ], {icon: this.truckIcon}).addTo(this.map).bindPopup("This is the Transamerica Pyramid");
-
+      L.Routing.control({
+        waypoints: this.data,
+        plan: L.Routing.plan(this.data, {
+          createMarker: function(i, wp, n) {
+            if (i == 0 || i == n - 1) {
+              return L.marker(wp.latlng, {
+                draggable: false // prevent users from changing waypoint position
+              });
+            } else {
+              return false;
+            }
+          }
+        }), 
+        addWaypoints: false // prevent users from adding new waypoints
+      }).addTo(this.map);
    //   router ;
    /*var arrayOfPoints = router.getLatLngs();
    console.log(arrayOfPoints);*/

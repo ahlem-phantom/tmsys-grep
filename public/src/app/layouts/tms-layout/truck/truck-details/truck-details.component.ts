@@ -159,6 +159,7 @@ setTimeout( () => {
     routeControl.on('routesfound', (e) =>  {
       var routes = e.routes;
       var summary = routes[0].summary;
+      console.log(routes[0])
       this.distance = (summary.totalDistance/ 1000).toFixed(2) + " km"
       this.tripDuration =  Math.floor(summary.totalTime/ 3600)+ " h " + Math.round(summary.totalTime % 3600 / 60) + " min "
       // alert time and distance in km and minutes
