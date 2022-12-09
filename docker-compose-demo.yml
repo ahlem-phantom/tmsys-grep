@@ -1,0 +1,233 @@
+version: "3.8"
+
+services:
+  database:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
+    environment:
+      POSTGRES_DB_FILE: /run/secrets/secret_database_db
+      POSTGRES_USER_FILE: /run/secrets/secret_database_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/secret_database_password
+    networks:
+      - database_adminer
+      - database_io
+      - database_io_quizzes_create
+      - database_io_quizzes_query
+    volumes:
+      - database_volume:/var/lib/postgresql/data
+    secrets:
+      - secret_database_user
+      - secret_database_password
+      - secret_database_db
+
+  email:
+    build:
+      context: ./email
+      dockerfile: Dockerfile
+    environment:
+      EMAIL_ADDRESS: /run/secrets/secret_email_address
+      EMAIL_PASSWORD: /run/secrets/secret_email_password
+    secrets:
+      - secret_email_address
+      - secret_email_password
+    networks:
+      - core_email
+
+  io:
+    build:
+      context: ./io
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_USER: /run/secrets/secret_database_user
+      DATABASE_PASSWORD: /run/secrets/secret_database_password
+      DATABASE_DB: /run/secrets/secret_database_db
+    secrets:
+      - secret_database_user
+      - secret_database_password
+      - secret_database_db
+    ports: 
+      - 5000:5000
+    volumes:
+      - ./io:/app
+    networks:
+      - database_io
+      - core_io
+      - auth_io
+    
+  io_quizzes_create:
+    build:
+      context: ./io_quizzes_create
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_USER: /run/secrets/secret_database_user
+      DATABASE_PASSWORD: /run/secrets/secret_database_password
+      DATABASE_DB: /run/secrets/secret_database_db
+    secrets:
+      - secret_database_user
+      - secret_database_password
+      - secret_database_db
+    volumes:
+      - ./io_quizzes_create:/app
+    networks:
+      - database_io_quizzes_create
+      - core_quizzes_create_io_quizzes_create
+
+  io_quizzes_query:
+    build:
+      context: ./io_quizzes_query
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_USER: /run/secrets/secret_database_user
+      DATABASE_PASSWORD: /run/secrets/secret_database_password
+      DATABASE_DB: /run/secrets/secret_database_db
+    secrets:
+      - secret_database_user
+      - secret_database_password
+      - secret_database_db
+    volumes:
+      - ./io_quizzes_query:/app
+    networks:
+      - database_io_quizzes_query
+      - core_quizzes_query_io_quizzes_query
+
+  core:
+    build:
+      context: ./core
+      dockerfile: Dockerfile
+    ports: 
+      - 5001:5000
+    volumes:
+      - ./core:/app
+    networks:
+      - core_io
+      - core_email
+      - auth_core
+      - kong_core
+
+  core_quizzes_create:
+    build:
+      context: ./core_quizzes_create
+      dockerfile: Dockerfile
+    volumes:
+      - ./core_quizzes_create:/app
+    networks:
+      - core_quizzes_create_io_quizzes_create
+      - auth_core_quizzes_create
+      - kong_core_quizzes_create
+
+  core_quizzes_query:
+    build:
+      context: ./core_quizzes_query
+      dockerfile: Dockerfile
+    volumes:
+      - ./core_quizzes_query:/app
+    networks:
+      - core_quizzes_query_io_quizzes_query
+      - auth_core_quizzes_query
+      - kong_core_quizzes_query
+
+  auth:
+    build:
+      context: ./auth
+      dockerfile: Dockerfile
+    ports: 
+      - 5002:5000
+    environment:
+      AUTH_JWT_KEY: /run/secrets/secret_auth_jwt_key
+    secrets:
+      - secret_auth_jwt_key
+    volumes:
+      - ./auth:/app
+    networks:
+      - auth_io
+      - auth_core
+      - kong_auth
+      - auth_core_quizzes_create
+      - auth_core_quizzes_query
+
+  adminer:
+    image: adminer
+    ports:
+      - 8080:8080
+    networks:
+      - database_adminer
+      - kong_adminer
+  
+  kong:
+    image: kong:latest
+    volumes:
+      - ./kong:/usr/local/kong/declarative
+    environment:
+      KONG_DATABASE: 'off'
+      KONG_DECLARATIVE_CONFIG: /usr/local/kong/declarative/kong.yml
+      KONG_PROXY_ACCESS_LOG: /dev/stdout
+      KONG_ADMIN_ACCESS_LOG: /dev/stdout
+      KONG_PROXY_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_ERROR_LOG: /dev/stderr
+      KONG_ADMIN_LISTEN: 0.0.0.0:8001, 0.0.0.0:8444 ssl
+    ports:
+      - 80:8000
+      - 443:8443
+    networks:
+      - kong_auth
+      - kong_core
+      - kong_adminer
+      - frontend_kong
+      - kong_core_quizzes_create
+      - kong_core_quizzes_query
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    environment:
+      CHOKIDAR_USEPOLLING: "true"
+      NODE_ENV: development
+      PROXY: "true"
+    stdin_open: true
+    networks:
+      - frontend_kong
+    volumes:
+      - "./frontend/src/.:/app/src"
+      - "./frontend/public/.:/app/public"
+
+networks:
+  database_adminer:
+  database_io:
+  core_io:
+  core_email:
+  auth_core:
+  auth_io:
+  kong_adminer:
+  kong_auth:
+  kong_core:
+  frontend_kong:
+  database_io_quizzes_create:
+  database_io_quizzes_query:
+  core_io_quizzes_query:
+  core_quizzes_create_io_quizzes_create:
+  auth_core_quizzes_create:
+  kong_core_quizzes_create:
+  core_quizzes_query_io_quizzes_query:
+  kong_core_quizzes_query:
+  auth_core_quizzes_query:
+
+volumes:
+  database_volume:
+
+secrets:
+  secret_database_user:
+    file: ./secrets/database_user
+  secret_database_password:
+    file: ./secrets/database_password
+  secret_database_db:
+    file: ./secrets/database_db
+  secret_email_address:
+    file: ./secrets/email_address
+  secret_email_password:
+    file: ./secrets/email_password
+  secret_auth_jwt_key:
+    file: ./secrets/auth_jwt_key
