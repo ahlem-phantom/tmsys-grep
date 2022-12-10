@@ -20,7 +20,7 @@ services:
           - POST
 
   - name: kong_auth
-      url: http://auth:5001
+      url: http://auth:5000/auth
       routes:
         - name: auth-service
           paths:
