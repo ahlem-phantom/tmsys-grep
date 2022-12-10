@@ -2,9 +2,9 @@ version: "3.8"
 
 services:
 
-  tmsys:
+  tmsys-service:
     build:
-      context: ./tmsys
+      context: ./tmsys-service
       dockerfile: Dockerfile
     ports: 
       - 5000:5000
@@ -13,9 +13,9 @@ services:
       - core_io
       - auth_io
 
-  core:
+  core-service:
     build:
-      context: ./core
+      context: ./core-service
       dockerfile: Dockerfile
     ports: 
       - 5001:5000
@@ -27,9 +27,9 @@ services:
       - auth_core
       - kong_core
  
-  auth:
+  auth-service:
     build:
-      context: ./auth
+      context: ./auth-service
       dockerfile: Dockerfile
     ports: 
       - 5002:5000

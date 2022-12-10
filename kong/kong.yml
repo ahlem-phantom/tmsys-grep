@@ -5,21 +5,39 @@ services:
   - name: kong_tms
     url: http://tms:5000
     routes:
-      - name: tms
+      - name: tms-service
         paths:
           - /tms
 
   - name: kong_ims
     url: http://ims:5001
     routes:
-      - name: ims
+      - name: ims-service
         paths:
           - /ims
         methods:
           - GET
           - POST
 
+  - name: kong_auth
+      url: http://auth:5001
+      routes:
+        - name: auth-service
+          paths:
+            - /auth
+          methods:
+            - GET
+            - POST
 
+  - name: kong_core
+      url: http://core:5001
+      routes:
+        - name: core-service
+          paths:
+            - /core
+          methods:
+            - GET
+            - POST
 plugins:
 - name: cors
   config: 
