@@ -1,0 +1,85 @@
+
+pipeline {
+  agent any
+  stages {
+    stage('Build') {
+      parallel {
+        stage('Build') {
+          steps {
+            sh 'echo "building the repo"'
+          }
+        }
+      }
+    }
+
+    stage('Checkout Git') {
+        steps {
+                echo 'Pulling ...';
+                git branch : 'main',
+                // Get some code from a GitHub repository
+                url: 'https://github.com/ahlem-phantom/tmsys-grep.git'
+            }
+    }
+  
+    stage('Test') {
+      steps {
+        sh 'python3 test_app.py'
+        input(id: "Deploy Gate", message: "Deploy ${params.project_name}?", ok: 'Deploy')
+      }
+    }
+     stage('MVN SONARQUBE '){
+            steps{
+                  sh 'mvn sonar:sonar -Dsonar.login=admin -Dsonar.password=esprit'
+            }
+        }
+    stage('Deploy')
+    {
+      steps {
+        echo "deploying the application"
+        sh "sudo nohup python3 app.py > log.txt 2>&1 &"
+      }
+    }
+  }
+  
+  post {
+        always {
+            echo 'The pipeline completed'
+            junit allowEmptyResults: true, testResults:'**/test_reports/*.xml'
+        }
+        success {                   
+            echo "Flask Application Up and running!!"
+             mail body: "success on job ${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}",
+             to: "ahlem.laajili@esprit.tn",
+             subject: "Pipeline Success"  
+        }
+        failure {
+            echo 'Build stage failed'
+            error('Stopping early…')
+            mail body: "Job has failed${env.JOB_NAME}, Build Number: ${env.BUILD_NUMBER}, Build URL: ${env.BUILD_URL}", 
+            to: "ahlem.laajili@esprit.tn",
+            subject: 'Pipeline fail'
+        }
+      }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
