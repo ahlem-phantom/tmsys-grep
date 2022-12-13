@@ -59,3 +59,12 @@ plugins:
     - X-Auth-Token
     credentials: true
     max_age: 3600
+
+consumers:
+- username: admin
+  custom_id: admin
+  plugins:
+  - name: key-auth
+    config:
+      key_names:
+      - apikey
